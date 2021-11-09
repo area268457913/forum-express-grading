@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs')
 const db = require('../models')
-const User = db.User
+const User = db.User //存取到之前建立的User model
 
 const userController = {
   signUpPage: (req, res) => {
