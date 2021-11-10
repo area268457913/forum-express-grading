@@ -4,6 +4,7 @@ const bodyParser = require('body-parser')// Express 升級到了 4.17.1 之後�
 const flash = require('connect-flash')
 const session = require('express-session')
 const passport = require('./config/passport')
+const methodOverride = require('method-override')
 
 const db = require('./models') // 引入資料庫
 const app = express()
@@ -26,6 +27,9 @@ app.use((req, res, next) => {
   res.locals.user = req.user //讓views能存取user
   next()
 })
+
+app.use(methodOverride('_method'))
+
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
