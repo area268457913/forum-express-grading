@@ -2,7 +2,7 @@ const express = require('express')
 const handlebars = require('express-handlebars') // 引入 handlebars
 const bodyParser = require('body-parser')// Express 升級到了 4.17.1 之後，不用額外載入 body-parser，這行程式碼便不用寫
 const flash = require('connect-flash')
-
+const helpers = require('./_helpers')
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
@@ -29,7 +29,8 @@ app.use(flash())
 app.use((req, res, next) => {
   res.locals.success_messages = req.flash('success_messages')
   res.locals.error_messages = req.flash('error_messages')
-  res.locals.user = req.user //讓views能存取user
+  //res.locals.user = req.user //讓views能存取user
+  res.locals.user = helpers.getUser(req) // 取代 req.user
   next()
 })
 
