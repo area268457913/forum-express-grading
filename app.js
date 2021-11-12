@@ -2,6 +2,11 @@ const express = require('express')
 const handlebars = require('express-handlebars') // 引入 handlebars
 const bodyParser = require('body-parser')// Express 升級到了 4.17.1 之後，不用額外載入 body-parser，這行程式碼便不用寫
 const flash = require('connect-flash')
+
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
+
 const session = require('express-session')
 const passport = require('./config/passport')
 const methodOverride = require('method-override')
