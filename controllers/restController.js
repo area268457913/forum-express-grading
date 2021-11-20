@@ -107,6 +107,21 @@ const restController = {
     ]).then(([restaurants, comments]) => {
       return res.render('feeds', { restaurants, comments })
     })
+  },
+  getDashBoard: (req, res) => {
+    return Restaurant.findByPk(
+      req.params.id,
+      {
+        include: [
+          Category,
+          { model: Comment, include: [Restaurant] }
+        ]
+      },
+
+    ).then((restaurant) => {
+      console.log(restaurant.toJSON())
+      return res.render('dashboard', { restaurant: restaurant.toJSON() })
+    })
   }
 
 }

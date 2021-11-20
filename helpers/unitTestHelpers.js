@@ -33,16 +33,11 @@ const createModelMock = (name, defaultValue, data, joinedTableName) => {
         return Promise.resolve(data.map(d => mockModel.build(d)))
       } else if (query === 'findAll') {
         // 回傳模擬資料
-<<<<<<< HEAD
         if (!data) {
           return mockModel.build([defaultValue]);
         }
         return Promise.resolve(data ? data.map(d => mockModel.build(d)) : [])
       } else if (query === 'destroy') {
-=======
-        return Promise.resolve( data ? data.map(d => mockModel.build(d)) : [])
-      }else if (query === 'destroy') {
->>>>>>> origin/R03-test
         // destroy 可以從 where 取得要刪除的資料
         // 因此就可以模擬將模擬資料中的資料刪除
         // 刪除模擬資料中的某一筆 joinTable 資料
@@ -65,12 +60,9 @@ const createModelMock = (name, defaultValue, data, joinedTableName) => {
         return Promise.resolve(mockModel.build(data))
       } else if (query === 'findAll') {
         // 回傳模擬資料
-<<<<<<< HEAD
         if (!data) {
           return mockModel.build([defaultValue]);
         }
-=======
->>>>>>> origin/R03-test
         return Promise.resolve(data ? data.map(d => mockModel.build(d)) : [])
       } else if (query === 'destroy') {
         // destroy 可以從 where 取得要刪除的資料
