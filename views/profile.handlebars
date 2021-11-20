@@ -1,0 +1,11 @@
+<div class="container-fluid">
+  <div class="card mt-1">
+    <div class="d-flex">
+      <img class="img-responsive center-block mr-2" src="{{user.image}}" style="width: 150px;border-radius: 50%">
+      <div class="mt-4 ml-2 mb-4">
+        <h2>{{user.name}}</h2>
+        <p>{{user.email}}</p>
+        <a href="/users/{{user.id}}/edit" class="btn btn-primary">edit</a>
+      </div>
+    </div>
+  </div>
