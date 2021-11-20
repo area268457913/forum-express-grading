@@ -7,7 +7,15 @@
     "dialect": "mysql"
   },
   "production": {
+<<<<<<< HEAD
     "use_env_variable": "CLEARDB_DATABASE_URL"
+=======
+    "username": "root",
+    "password": null,
+    "database": "database_production",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+>>>>>>> origin/R03-test
   },
   "travis": {
     "username": "travis",
