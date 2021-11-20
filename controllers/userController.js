@@ -1,11 +1,14 @@
 const bcrypt = require('bcryptjs')
 const db = require('../models')
 const User = db.User //存取到之前建立的User model
+const Restaurant = db.Restaurant
+const Comment = db.Comment
 const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
 
 const userController = {
+
   signUpPage: (req, res) => {
     return res.render('signup')
   },
@@ -51,11 +54,25 @@ const userController = {
   },
 
   getUser: (req, res) => {
-    return User.findByPk(req.params.id).then((user) => {
-      res.render('profile', { user: user.toJSON() })
+
+    return User.findByPk(req.params.id, {
+      include: [
+        { model: Comment, include: [Restaurant] }
+      ]
+    }).then((user) => {
+      // console.log(user.toJSON().Comments)
+      const comment = user.toJSON().Comments
+      res.render('profile', { user: user.toJSON(), comment })
+
     })
   },
   editUser: (req, res) => {
+
+    if (Number(req.params.id) !== req.user.id) {
+      req.flash('error_messages', "只能修改自己資料")
+      return res.redirect('back')
+    }
+
     return User.findByPk(req.params.id).then(
       user => {
         return res.render('edit', { user: user.toJSON() })
@@ -70,6 +87,7 @@ const userController = {
       return res.redirect('back')
 
     }
+
     const { file } = req
     if (file) {
       imgur.setClientID(IMGUR_CLIENT_ID);

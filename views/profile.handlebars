@@ -5,7 +5,23 @@
       <div class="mt-4 ml-2 mb-4">
         <h2>{{user.name}}</h2>
         <p>{{user.email}}</p>
+        <p>{{comment.length}} 已評論餐廳</p>
         <a href="/users/{{user.id}}/edit" class="btn btn-primary">edit</a>
       </div>
+    </div>
+  </div>
+  <div class="card mt-4">
+    <div class="card-header">
+      {{comment.length}} 已評論餐廳
+    </div>
+    <div class="card-body d-flex">
+      {{#each comment}}
+      <div class="col-md-2 text-center">
+        <img src="{{this.Restaurant.image}}" class="img-thumbnail mx-2 my-2" style="width: 100px; height:100px;"
+          alt="{{this.Restaurant.name}}">
+        <a href="/restaurants/{{this.Restaurant.id}}">{{this.Restaurant.name}}</a>
+      </div>
+
+      {{/each}}
     </div>
   </div>
