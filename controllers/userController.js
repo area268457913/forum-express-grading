@@ -3,6 +3,7 @@ const db = require('../models')
 const User = db.User //存取到之前建立的User model
 const Restaurant = db.Restaurant
 const Comment = db.Comment
+const helpers = require('../_helpers')
 const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
@@ -68,7 +69,7 @@ const userController = {
   },
   editUser: (req, res) => {
 
-    if (Number(req.params.id) !== req.user.id) {
+    if (Number(req.params.id) !== helpers.getUser(req).id) {
       req.flash('error_messages', "只能修改自己資料")
       return res.redirect('back')
     }
@@ -81,6 +82,8 @@ const userController = {
   },
 
   putUser: (req, res) => {
+
+
 
     if (!req.body.name || !req.body.email) {
       req.flash('error_messages', "name or email didn't exist")
