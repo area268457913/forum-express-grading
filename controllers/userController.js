@@ -4,6 +4,7 @@ const User = db.User //存取到之前建立的User model
 const Restaurant = db.Restaurant
 const Comment = db.Comment
 const Favorite = db.Favorite
+const Like = db.Like
 const helpers = require('../_helpers')
 const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
@@ -129,7 +130,7 @@ const userController = {
 
   addFavorite: (req, res) => {
     return Favorite.create({
-      UserId: req.user.id,
+      UserId: helpers.getUser(req).id,
       RestaurantId: req.params.restaurantId
     })
       .then((restaurant) => {
@@ -139,7 +140,7 @@ const userController = {
   removeFavorite: (req, res) => {
     return Favorite.findOne({
       where: {
-        UserId: req.user.id,
+        UserId: helpers.getUser(req).id,
         RestaurantId: req.params.restaurantId
       }
     })
@@ -149,6 +150,39 @@ const userController = {
             return res.redirect('back')
           })
       })
+  },
+  addLike: (req, res) => {
+    return Like.create({
+      UserId: helpers.getUser(req).id,
+      RestaurantId: req.params.restaurantId
+    })
+      .then((restaurant) => {
+        return res.redirect('back')
+      })
+  },
+  removeLike: (req, res) => {
+
+    return Like.destroy({
+      where: {
+        UserId: helpers.getUser(req).id,
+        RestaurantId: req.params.restaurantId
+      }
+    }).then((restaurant) => {
+      return res.redirect('back')
+    })
+
+    // return Like.findOne({
+    //   where: {
+    //     UserId: helpers.getUser(req).id,
+    //     RestaurantId: req.params.restaurantId
+    //   }
+    // })
+    //   .then((like) => {
+    //     like.destroy()
+    //       .then((restaurant) => {
+    //         return res.redirect('back')
+    //       })
+    //   })
   }
 }
 

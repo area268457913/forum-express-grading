@@ -4,6 +4,7 @@ const Category = db.Category
 const pageLimit = 10
 const Comment = db.Comment
 const User = db.User
+const Like = db.Like
 
 
 const restController = {
@@ -36,7 +37,8 @@ const restController = {
         ...r.dataValues,
         description: r.dataValues.description.substring(0, 50),
         categoryName: r.dataValues.Category.name,
-        isFavorited: req.user.FavoritedRestaurants.map(d => d.id).includes(r.id)
+        isFavorited: req.user.FavoritedRestaurants.map(d => d.id).includes(r.id),
+        isLike: req.user.LikeRestaurants.map(d => d.id).includes(r.id),
       }))
       Category.findAll({
         raw: true,
@@ -59,15 +61,18 @@ const restController = {
       include: [
         Category,
         { model: User, as: 'FavoritedUsers' },  // 加入關聯資料
+        { model: User, as: 'LikeUsers' },
         { model: Comment, include: [User] }
       ]
     }).then(restaurant => {
       // console.log(restaurant.Comments[0].dataValues)
       const isFavorited = restaurant.FavoritedUsers.map(d => d.id).includes(req.user.id) // 找出收藏此餐廳的 user
+      const isLike = restaurant.LikeUsers.map(d => d.id).includes(req.user.id)
       restaurant.increment("viewCounts"); //sequelize遞增方法，用increment
       return res.render('restaurant', {
         restaurant: restaurant.toJSON(),
-        isFavorited: isFavorited  // 將資料傳到前端
+        isFavorited: isFavorited,  // 將資料傳到前端
+        isLike: isLike
       })
     })
   },
