@@ -61,7 +61,7 @@ const restController = {
       ]
     }).then(restaurant => {
       // console.log(restaurant.Comments[0].dataValues)
-      restaurant.increment("viewCounts");
+      restaurant.increment("viewCounts"); //sequelize遞增方法，用increment
       return res.render('restaurant', {
         restaurant: restaurant.toJSON(),
       })

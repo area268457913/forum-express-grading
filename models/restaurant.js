@@ -13,6 +13,11 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Restaurant.belongsTo(models.Category)  // 加入關聯設定
       Restaurant.hasMany(models.Comment)
+      Restaurant.belongsToMany(models.User, {
+        through: models.Favorite,
+        foreignKey: 'RestaurantId',
+        as: 'FavoritedUsers'
+      })
     }
   };
   Restaurant.init({
@@ -23,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
     description: DataTypes.TEXT,
     image: DataTypes.STRING,
     CategoryId: DataTypes.INTEGER,  // 更新欄位清單
-    viewCounts: DataTypes.INTEGER
+    viewCounts: DataTypes.INTEGER,
 
   }, {
     sequelize,
