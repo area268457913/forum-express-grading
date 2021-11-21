@@ -72,8 +72,10 @@ module.exports = (app, passport) => {
   app.delete('/comments/:id', authenticatedAdmin, commentController.deleteComment)
 
   // profile
-
-  app.get('/users/:id', authenticated, userController.getUser)
+  // 美食達人
+  app.get('/users/top', authenticated, userController.getTopUser)
   app.get('/users/:id/edit', authenticated, userController.editUser)
+  app.get('/users/:id', authenticated, userController.getUser)
   app.put('/users/:id', authenticated, upload.single('image'), userController.putUser)
+
 }
