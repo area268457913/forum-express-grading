@@ -132,6 +132,9 @@ const restController = {
       console.log(restaurant.toJSON())
       return res.render('dashboard', { restaurant: restaurant.toJSON() })
     })
+  },
+  getTopRestaurant: (req, res) => {
+    return res.render('top')
   }
 
 }
